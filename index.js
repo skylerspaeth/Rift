@@ -1,16 +1,30 @@
 const 
-	// Webserver
+	// Webserver, templating
   	express = require('express'),
   	app = express(),
   	hbs = require('express-handlebars').create({ defaultLayout: 'main' }),
   	port = 3000,
 
-	// Database
-  	{ db } = require('./db.js'),
-	{ uri } = require('./private.json'),
-  	{ MongoClient } = require('mongodb')
+	// Database, backend
+  	{ jsonDB } = require('./db.js'),
+	{ url, dbName } = require('./private.json'),
+	assert = require('assert'),
+  	{ MongoClient } = require('mongodb'),
+	client = new MongoClient(url, { useUnifiedTopology: true })
 ;
+
 let thisRift;
+
+client.connect(function(err) {
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+
+  const db = client.db(dbName);
+
+
+  client.close();
+});
+
 
 class Post {
 	constructor(author, context, content) {
@@ -31,13 +45,13 @@ app.get('/', (req, res) => {
 
 app.get('/rifts', (req, res) => {
   res.set('Content-Type', 'text/html');
-  res.render('rifts', { rifts: db } );
+  res.render('rifts', { rifts: jsonDB } );
 });
 
 app.get('/_/:riftName', (req, res) => {
   res.set('Content-Type', 'text/html');
-  if (db.find((e) => e.name == req.params.riftName)) {
-    thisRift = db.find((e) => e.name == req.params.riftName);
+  if (jsonDB.find((e) => e.name == req.params.riftName)) {
+    thisRift = jsonDB.find((e) => e.name == req.params.riftName);
     console.log('found an entry: ', thisRift);
     res.render('detail', { rift: thisRift } );
   } else {
