@@ -1,66 +1,51 @@
 body, html {
-  background: #4B79A1;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #283E51, #4B79A1);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #283E51, #4B79A1); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+,Opera 12+, Safari 7+ */
-  color: white;
-  /* font-family: sans-serif; */
-  height: 100%;
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+	background: #42275a;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #734b6d, #42275a);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #734b6d, #42275a); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ 
+	color: white;
+	/* font-family: sans-serif; */
+	height: 100%;
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 a { color: white; }
 
 h1.rifts {
-  text-decoration: none;
-  text-align: center;
+	text-decoration: none;
+	text-align: center;
 }
 
 span.title {
-  text-align: center;
+	text-align: center;
 }
 
 img.banner {
-  width: 100vh;
+	width: 100vh;
 }
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-  height: 50%;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  position: relative;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+	height: 50%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
 }
 
 .hero-text {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-}
-
-.hero-text button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 10px 25px;
-  margin-bottom: 40px;
-  color: black;
-  background-color: #ddd;
-  text-align: center;
-  cursor: pointer;
-}
-
-.hero-text button:hover {
-  background-color: #555;
-  color: white;
+	text-align: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
 }
 
 .post {
-  background-color: grey;
-  opacity: 0.75;
-  border-radius: 5px;
+	background-color: white;
+	opacity: 0.5;
+	border-radius: 7px;
+	margin: 20px 20px;
+	padding: 20px 20px;
 }

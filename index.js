@@ -10,7 +10,8 @@ let thisRift;
 class Post {
 	constructor(author, context, content) {
 		this.author = author;
-		this.width = width;
+		this.context = context;
+		this.content = content;
 	}
 }
 
