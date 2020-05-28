@@ -1,0 +1,17 @@
+Dudeman. This is the to do list. We do what is on said list.
+
+  - Implement Bootstrap
+  - Get this damn project off repl.it so it's not public
+  - Implement mongoDB
+  - Implement posting
+    - API endpoints:
+      - POST:
+        - Body
+        - Author ID
+        - Title
+        - ...
+
+
+        
+  - Implement HTTPS/SSL
+  - Utilize session data & cookies

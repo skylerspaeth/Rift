@@ -1,0 +1,19 @@
+<div class="hero-image" style="background-image: url('{{rift.banner}}')">
+  <div class="hero-text">
+    <h1 style="font-size:50px">{{rift.title}}</h1>
+    <p>{{rift.desc}}</p>
+    <button>Subscribe</button>
+  </div>
+</div>
+
+<div class="posts">
+  {{#each rift.posts}}
+    <div class="post">
+      <p><strong>{{{title}}}</strong></p><br/>
+      <p>{{{body}}}</p><hr/>
+    </div>
+  {{/each}}
+</div>
+
+<!--<img class="banner" src="{{rift.banner}}" /><br />
+<span class="title"><strong>/_/{{rift.title}}</strong></span>-->
