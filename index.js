@@ -1,9 +1,14 @@
 const 
-  express = require('express'),
-  app = express(),
-  hbs = require('express-handlebars').create({ defaultLayout: 'main' }),
-  port = 3000,
-  { db } = require('./db.js')
+	// Webserver
+  	express = require('express'),
+  	app = express(),
+  	hbs = require('express-handlebars').create({ defaultLayout: 'main' }),
+  	port = 3000,
+
+	// Database
+  	{ db } = require('./db.js'),
+	{ uri } = require('./private.json'),
+  	{ MongoClient } = require('mongodb')
 ;
 let thisRift;
 
