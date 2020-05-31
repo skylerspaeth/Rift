@@ -16,8 +16,10 @@
     "express": "^4.17.1",
     "express-handlebars": "^4.0.4",
     "jquery": "^3.5.1",
+    "moment": "^2.26.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.16",
-    "popper.js": "^1.16.1"
+    "popper.js": "^1.16.1",
+    "socket.io": "^2.3.0"
   }
 }

@@ -9,9 +9,12 @@ Dudeman. This is the to do list. We do what is on said list.
         - Body
         - Author ID
         - Title
-        - ...
+        - Display sent messages modularly: div.innerHTML = `<p class="meta">${user.name} <span> ${message.posted.time}</span></p>
+          <p class="text">
+            ${message.content}
+          </p>`;
 
-
+  - 404 handler
         
   - Implement HTTPS/SSL
   - Utilize session data & cookies
