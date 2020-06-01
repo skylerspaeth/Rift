@@ -4,7 +4,18 @@ mongoose.connect('mongodb://localhost:27017/riftDB', { useUnifiedTopology: true,
 	if (!err) { console.log(`connection to mongoDB ${dbName} succeeded`) }
 	else { console.log(`Error connecting to mongoDB ${err}`) }
 });
-save;
+
+var { riftSchema } = require('./rift.model.js');
+var Rift = mongoose.model('Rift', riftSchema);
+
+(function () {
+	// Rift.create({ name: "testing123" });
+	Rift.find((err, found) => {
+		if (err) { console.log(err) }
+		else { console.log(found[0]['name']) }
+	});
+})();
+
 const
 	save = (object) => {
 		object.save((err, doc) => {
@@ -42,9 +53,9 @@ const
 				userToAdd.email = req.body.email;
 				userToAdd.userName = req.body.userName;
 				userToAdd.descriminator = descriminator.newUser.generate();
-				userToAdd.icon = req.reactUpload.image(500px, 500px ?crop&&?cropMin 100px, 100px);
+				//userToAdd.icon = req.reactUpload.image(500px, 500px ?crop && ?cropMin 100px, 100px);
 				userToAdd.locale = client.browser.getLocal();
-				userToAdd.creationDate = moment.creationDate;1
+				userToAdd.creationDate = moment.creationDate; 1
 
 				console.log("new user created");
 				break;

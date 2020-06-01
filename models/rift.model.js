@@ -1,21 +1,12 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var riftSchema = new mongoose.Schema((
-  owner: {
-    type: Integer,
-  },
-  title: {
-    type: String,
-  },
-  name: {
-    type: String,
-  },
-  desc: {
-    type: String,
-  },
-  banner: {
-    type: String,
-  }
-));
+module.exports.riftSchema = new Schema({
+  owner: Number,
+  title: String,
+  name: String,
+  desc: String,
+  banner: String
+});
 
-mongoose.model("Rift", riftSchema);
+// mongoose.model("Rift", riftSchema);
