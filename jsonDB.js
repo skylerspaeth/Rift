@@ -17,7 +17,8 @@ module.exports.db = [
       posts: [
         { title: "Yeet", body: "Lorem ipsum niquan." },
         { title: "Skeet", body: "Second body text." },
-        { title: "Never retreat", body: "Bruh" }
+        { title: "Never retreat", body: "Bruh" },
+        { title: "But you can Bleat", body: "That's what a goat does"}
       ]
     },
     {

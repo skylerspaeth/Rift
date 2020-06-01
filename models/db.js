@@ -4,7 +4,7 @@ mongoose.connect('mongodb://localhost:27017/riftDB', { useUnifiedTopology: true,
 	if (!err) { console.log(`connection to mongoDB ${dbName} succeeded`) }
 	else { console.log(`Error connecting to mongoDB ${err}`) }
 });
-
+save;
 const
 	save = (object) => {
 		object.save((err, doc) => {
@@ -33,11 +33,19 @@ const
 				riftToAdd.desc = req.body.newDesc;
 				riftToAdd.banner = req.body.newBanner;
 				riftToAdd.icon = req.body.newIcon;
-				riftToAdd.creationDate = this.creationDate;
+				riftToAdd.creationDate = moment.creationDate;
 
 				console.log("new rift created");
 				break;
 			case user:
+				var userToAdd = new User();
+				userToAdd.email = req.body.email;
+				userToAdd.userName = req.body.userName;
+				userToAdd.descriminator = descriminator.newUser.generate();
+				userToAdd.icon = req.reactUpload.image(500px, 500px ?crop&&?cropMin 100px, 100px);
+				userToAdd.locale = client.browser.getLocal();
+				userToAdd.creationDate = moment.creationDate;1
+
 				console.log("new user created");
 				break;
 			case post:
