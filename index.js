@@ -33,7 +33,8 @@ app.use(fileupload());
 // Route definitions
 app.get("/", (req, res) => {
 	res.set("Content-Type", "text/html");
-	res.render("landing");
+	res.render("landing", {isHome: true});
+
 });
 
 app.get("/rifts", (req, res) => {
