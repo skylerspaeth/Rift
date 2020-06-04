@@ -2,6 +2,7 @@
 require("./models/db.js");
 const
   // Webserver, templating
+  fileupload = require('express-fileupload'),
   express = require("express"),
   app = express(),
   hbs = require("express-handlebars").create({ defaultLayout: "main" }),
@@ -19,6 +20,69 @@ const
   ;
 
 let thisRift;
+
+//I dont really know what I'm doing
+fileupload(),
+        app.post('/saveImage', (req, res) => {
+            const fileName = req.files.myFile.name
+            const path = __dirname + '/images/' + fileName
+          
+            image.mv(path, (error) => {
+              if (error) {
+                console.error(error)
+                res.writeHead(500, {
+                  'Content-Type': 'application/json'
+                })
+                res.end(JSON.stringify({ status: 'error', message: error }))
+                return
+              }
+          
+              res.writeHead(200, {
+                'Content-Type': 'application/json'
+              })
+              res.end(JSON.stringify({ status: 'success', path: '/img/houses/' + fileName }))
+            })
+          })
+          const handleImageUpload = event => {
+            const files = event.target.files
+            const formData = new FormData()
+            formData.append('imageUpload', files[0])
+          
+            fetch('/img/', {
+              method: 'POST',
+              body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data.path)
+            })
+            .catch(error => {
+              console.error(error)
+            })
+          }
+          
+          document.querySelector('#fileUpload').addEventListener('change', event => {
+            handleImageUpload(event)
+          })
+        
+          const handleImageUpload = event => {
+            const files = event.target.files;
+            const myImage = files[0];
+            const imageType = /image.*/;
+          
+            if (!myImage.type.match(imageType)) {
+              alert('Sorry, only images are allowed');
+              return;
+            }
+          
+            if (myImage.size > (100*1024)) {
+              alert('Sorry, the max allowed size for images is 100KB');
+              return;
+            }
+          
+        }
+          
+//End of me not knowing what I'm doing        
 
 // App configuration
 app.use(bodyParser.json())
