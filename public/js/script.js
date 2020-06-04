@@ -8,7 +8,7 @@ const handleImageUpload = event => {
         return;
     }
 
-    if (myImage.size > (100*1024)) {
+    if (myImage.size > (1920*1080)) {
         alert('Sorry, the max allowed size for images is 100KB');
         return;
     }
