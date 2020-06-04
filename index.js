@@ -27,6 +27,7 @@ app.use(express.json());
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 app.use(express.static(__dirname + "/public"));
+app.use(fileupload());
 
 // Route definitions
 app.get("/", (req, res) => {
@@ -64,11 +65,35 @@ app.post("/submit", (req, res) => {
   // console.log(`${req.query.type} sent a POST request with the content`);
   // console.log(req.body.title);
   // } else {
-  // console.log("this function should only be called with a type in the querystring");
+  //" console.log("this function should only be called with a type in the querystring");
   // }
 });
 
-// Socket definitions
+app.post('/saveImage', (req, res) => {
+  const fileName = req.files.myFile.name
+  const path = __dirname + '/public/img/banner/' + fileName
+  const image = req.files.myFile
+
+  image.mv(path, (error) => {
+    if (error) {
+      console.error(error)
+      res.writeHead(500, {
+        'Content-Type': 'application/json'
+      })
+      res.end(JSON.stringify({ status: 'error', message: error }))
+      return
+    }
+
+    res.writeHead(200, {
+      'Content-Type': 'application/json'
+    })
+    res.end(JSON.stringify({ status: 'success', path: '/img/banner/' + fileName }))
+  })
+})
+
+// ************************
+// ***Socket definitions***
+// ************************
 io.on('connection', (client) => {
   console.log('someone connected');
   client.on('create', (data) => {
