@@ -8,13 +8,30 @@ mongoose.connect('mongodb://localhost:27017/riftDB', { useUnifiedTopology: true,
 var { riftSchema } = require('./rift.model.js');
 var Rift = mongoose.model('Rift', riftSchema);
 
-(function () {
-	// Rift.create({ name: "testing123" });
-	Rift.find((err, found) => {
+let newRiftObject = {
+	owner: 69420,
+	title: "Node.js Rift",
+	name: "nodejs",
+	desc: "Discussions about Node.js",
+	banner: "/img/banner/nodejs.jpg",
+	roles: [{ name: "Role 1", epic: true }, { name: "Role 2", epic: false }, { name: "Role 3", epic: true }],
+	locale: "en_US",
+	members: [123, 456, 789]
+}
+
+function create(object) {
+	Rift.create(object);
+}
+
+function read(riftName) {
+	Rift.find({ name: riftName }, (err, result) => {
 		if (err) { console.log(err) }
-		else { console.log(found[0]['name']) }
+		else { console.log(result[0]) }
+		// else { console.log(result[0]['rifts']) }
 	});
-})();
+};
+create(newRiftObject);
+read("nodejs");
 
 const
 	save = (object) => {

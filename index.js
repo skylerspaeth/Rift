@@ -69,7 +69,7 @@ app.post("/submit", (req, res) => {
 
 // Socket definitions
 io.on('connection', (client) => {
-  console.log('New user connected');
+  console.log('someone connected');
   client.on('create', (data) => {
     console.log(data);
   });
