@@ -107,7 +107,7 @@ io.on('connection', (client) => {
 				// async function f() {
 				// 	// database.riftCrud.create(newRiftOebject);
 				// }
-				database.riftCrud.create(newRiftObject).then(database.riftCrud.read(data.title).then(
+				database.riftCrud.create(newRiftObject).finally(database.riftCrud.read(data.title).then(
 					example => {
 						console.log(example);
 					}
