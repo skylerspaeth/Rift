@@ -39,7 +39,8 @@ app.get("/", (req, res) => {
 
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
-	res.render("rifts", { rifts: jsonDB });
+	let riftsArray = database.riftCrud.forEach();
+	res.render("rifts", { rifts: riftsArray });
 });
 
 app.get("/_/:riftName", (req, res) => {
@@ -104,14 +105,8 @@ io.on('connection', (client) => {
 					locale: "en_US",
 					members: [69420]
 				}
-				// async function f() {
-				// 	// database.riftCrud.create(newRiftOebject);
-				// }
-				database.riftCrud.create(newRiftObject).finally(database.riftCrud.read(data.title).then(
-					example => {
-						console.log(example);
-					}
-				));
+				database.riftCrud.create(newRiftObject);
+				// database.riftCrud.read(data.title);
 				break;
 			//case user, post, ...
 			default:

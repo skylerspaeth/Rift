@@ -36,8 +36,8 @@ module.exports.riftCrud = {
 	delete: function () { },
 	forEach: async function () {
 		Rift.find({}, (err, results) => {
-			results.forEach((e) => {
-				console.log('this object: ' + e);
+			return results;
+			results.forEach((e) => {;
 			});
 		})
 	}
