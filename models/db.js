@@ -28,10 +28,12 @@ module.exports.riftCrud = {
 	read: function (riftName) {
 		Rift.find({ name: riftName }, (err, result) => {
 			if (err) { console.log(err) }
-			else { console.log(result[0]) }
+			else { console.log(result) }
 			// else { console.log(result[0]['rifts']) }
 		});
-	}
+	},
+	update: function() {},
+	delete: function() {} 
 }
 
 

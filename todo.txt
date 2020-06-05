@@ -1,7 +1,8 @@
 Dudeman. This is the to do list. We do what is on said list.
 
+
+  - Change rift list from object to array, implement push for new rifts, add foreach...
   - Implement Bootstrap
-  - Get this damn project off repl.it so it's not public
   - Implement mongoDB
   - Implement posting
     - API endpoints:
@@ -13,8 +14,6 @@ Dudeman. This is the to do list. We do what is on said list.
           <p class="text">
             ${message.content}
           </p>`;
-
-  - 404 handler
         
   - Implement HTTPS/SSL
   - Utilize session data & cookies
