@@ -105,9 +105,9 @@ io.on('connection', (client) => {
 					members: [69420]
 				}
 				// async function f() {
-				// 	// database.riftCrud.create(newRiftObject);
+				// 	// database.riftCrud.create(newRiftOebject);
 				// }
-				database.riftCrud.create(newRiftObject).then(console.log(database.riftCrud.read(data.title)));
+				database.riftCrud.create(newRiftObject).then(console.log(database.riftCrud.read(data.title))});
 				break;
 			//case user, post, ...
 			default:
