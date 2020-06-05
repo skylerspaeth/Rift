@@ -1,5 +1,20 @@
+// MongoDB stuff
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/";
+const connection;
+MongoClient.connect(url, function (err, db) {
+	if (err) throw err;
+	else { console.log('pure mongo databse connected successfuly') }
+	var dbo = db.db("riftDB");
+
+});
+
+
+
+// Mongoose stuff
 const mongoose = require('mongoose');
 const dbName = "riftDB";
+
 mongoose.connect(`mongodb://localhost:27017/${dbName}`, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
 	if (!err) { console.log(`connection to mongoDB ${dbName} succeeded`) }
 	else { console.log(`Error connecting to mongoDB ${err}`) }
@@ -22,10 +37,10 @@ let sampleRiftObject = {
 */
 
 module.exports.riftCrud = {
-	create: async function (object) {
+	create: function (object) {
 		Rift.create(object);
 	},
-	read: async function (riftName) {
+	read: function (riftName) {
 		Rift.find({ name: riftName }, (err, result) => {
 			if (err) { return err; }
 			else { return result; }
@@ -34,11 +49,17 @@ module.exports.riftCrud = {
 	},
 	update: function () { },
 	delete: function () { },
-	forEach: async function () {
-		Rift.find({}, (err, results) => {
-			return results;
-			// results.forEach((e) => { });
-		})
+	forEach: function () {
+		// Rift.find({}, (err, results) => {
+		// 	return results;
+		// 	// console.log(results);
+		// })
+
+		dbo.collection("rifts").find({}).toArray(function (err, result) {
+			if (err) throw err;
+			console.log(result);
+			db.close();
+		});
 	}
 }
 
