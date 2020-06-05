@@ -1,6 +1,6 @@
 // Database schema initialization
 const
-// Webserver, templating
+	// Webserver, templating
 	fileupload = require('express-fileupload'),
 	express = require("express"),
 	app = express(),
@@ -18,7 +18,7 @@ const
 	jsonDB = require("./jsonDB.js").db,
 	database = require("./models/db.js")
 
-;
+	;
 
 //require("./models/db.js");
 
@@ -33,7 +33,7 @@ app.use(fileupload());
 // Route definitions
 app.get("/", (req, res) => {
 	res.set("Content-Type", "text/html");
-	res.render("landing", {isHome: true});
+	res.render("landing", { isHome: true });
 
 });
 
@@ -104,8 +104,10 @@ io.on('connection', (client) => {
 					locale: "en_US",
 					members: [69420]
 				}
-				database.riftCrud.create(newRiftObject);
-				database.riftCrud.read(data.title);
+				// async function f() {
+				// 	// database.riftCrud.create(newRiftObject);
+				// }
+				database.riftCrud.create(newRiftObject).then(console.log(database.riftCrud.read(data.title)));
 				break;
 			//case user, post, ...
 			default:
