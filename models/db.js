@@ -1,3 +1,16 @@
+// MongoDB stuff
+const MongoClient = require('mongodb').MongoClient;
+const url = "mongodb://localhost:27017/";
+const connection;
+MongoClient.connect(url, function (err, db) {
+	if (err) throw err;
+	else { console.log('pure mongo databse connected successfuly') }
+	var dbo = db.db("riftDB");
+
+});
+
+
+
 // Mongoose stuff
 const mongoose = require('mongoose');
 const dbName = "riftDB";
@@ -37,11 +50,16 @@ module.exports.riftCrud = {
 	update: function () { },
 	delete: function () { },
 	forEach: function () {
-		let ret = Rift.find({}, (err, results) => {
-			// console.log(results);
-			return results;
+		// Rift.find({}, (err, results) => {
+		// 	return results;
+		// 	// console.log(results);
+		// })
+
+		dbo.collection("rifts").find({}).toArray(function (err, result) {
+			if (err) throw err;
+			console.log(result);
+			db.close();
 		});
-		return ret;
 	}
 }
 
