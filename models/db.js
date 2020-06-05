@@ -37,8 +37,7 @@ module.exports.riftCrud = {
 	forEach: async function () {
 		Rift.find({}, (err, results) => {
 			return results;
-			results.forEach((e) => {;
-			});
+			// results.forEach((e) => { });
 		})
 	}
 }
