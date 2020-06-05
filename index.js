@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
 	let riftsArray = database.riftCrud.forEach();
-	// console.log(riftsArray);
+	console.log(riftsArray);
 	res.render("rifts", { rifts: riftsArray });
 });
 
