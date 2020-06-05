@@ -1,6 +1,8 @@
+// Mongoose stuff
 const mongoose = require('mongoose');
 const dbName = "riftDB";
-mongoose.connect('mongodb://localhost:27017/riftDB', { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
+
+mongoose.connect(`mongodb://localhost:27017/${dbName}`, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
 	if (!err) { console.log(`connection to mongoDB ${dbName} succeeded`) }
 	else { console.log(`Error connecting to mongoDB ${err}`) }
 });
@@ -27,13 +29,20 @@ module.exports.riftCrud = {
 	},
 	read: function (riftName) {
 		Rift.find({ name: riftName }, (err, result) => {
-			if (err) { console.log(err) }
-			else { console.log(result) }
+			if (err) { return err; }
+			else { return result; }
 			// else { console.log(result[0]['rifts']) }
 		});
 	},
-	update: function() {},
-	delete: function() {} 
+	update: function () { },
+	delete: function () { },
+	forEach: function () {
+		let ret = Rift.find({}, (err, results) => {
+			// console.log(results);
+			return results;
+		});
+		return ret;
+	}
 }
 
 

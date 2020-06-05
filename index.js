@@ -1,6 +1,6 @@
 // Database schema initialization
 const
-// Webserver, templating
+	// Webserver, templating
 	fileupload = require('express-fileupload'),
 	express = require("express"),
 	app = express(),
@@ -18,7 +18,7 @@ const
 	jsonDB = require("./jsonDB.js").db,
 	database = require("./models/db.js")
 
-;
+	;
 
 //require("./models/db.js");
 
@@ -33,13 +33,15 @@ app.use(fileupload());
 // Route definitions
 app.get("/", (req, res) => {
 	res.set("Content-Type", "text/html");
-	res.render("landing", {isHome: true});
+	res.render("landing", { isHome: true });
 
 });
 
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
-	res.render("rifts", { rifts: jsonDB });
+	let riftsArray = database.riftCrud.forEach();
+	console.log(riftsArray);
+	res.render("rifts", { rifts: riftsArray });
 });
 
 app.get("/_/:riftName", (req, res) => {
@@ -105,7 +107,7 @@ io.on('connection', (client) => {
 					members: [69420]
 				}
 				database.riftCrud.create(newRiftObject);
-				database.riftCrud.read(data.title);
+				// database.riftCrud.read(data.title);
 				break;
 			//case user, post, ...
 			default:
