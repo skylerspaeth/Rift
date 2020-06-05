@@ -107,7 +107,11 @@ io.on('connection', (client) => {
 				// async function f() {
 				// 	// database.riftCrud.create(newRiftOebject);
 				// }
-				database.riftCrud.create(newRiftObject).then(console.log(database.riftCrud.read(data.title))});
+				database.riftCrud.create(newRiftObject).then(database.riftCrud.read(data.title).then(
+					example => {
+						console.log(example);
+					}
+				));
 				break;
 			//case user, post, ...
 			default:
