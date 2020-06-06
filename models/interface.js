@@ -7,7 +7,17 @@ async function run() {
     const { riftSchema } = require('./rift.model.js');
     const Rift = mongoose.model('Rift', riftSchema);
 
-    module.exports.allRifts = await async function () { Rift.find({}, (err, results) => err ? err : results).lean() };
+    // module.exports.allRifts = await async function () { return Rift.find({}, (err, results) => err ? err : results).lean().then((object) => object) };
+    module.exports.allRifts = function () {
+        return User
+            .findOne({})
+            .then(function (arr) {
+                return arr;
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
 
     module.exports.riftCrud = {
         create: function (object) {
