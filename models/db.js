@@ -1,15 +1,6 @@
 // MongoDB stuff
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/";
-const connection;
-MongoClient.connect(url, function (err, db) {
-	if (err) throw err;
-	else { console.log('pure mongo databse connected successfuly') }
-	var dbo = db.db("riftDB");
-
-});
-
-
 
 // Mongoose stuff
 const mongoose = require('mongoose');
@@ -49,17 +40,14 @@ module.exports.riftCrud = {
 	},
 	update: function () { },
 	delete: function () { },
-	forEach: function () {
-		// Rift.find({}, (err, results) => {
-		// 	return results;
-		// 	// console.log(results);
-		// })
-
-		dbo.collection("rifts").find({}).toArray(function (err, result) {
-			if (err) throw err;
-			console.log(result);
-			db.close();
-		});
+	forEach: async function () {
+		await (function () {
+			return Rift.find({}, (err, results) => {
+				// ret = results;
+				// console.log(ret);
+				return results;
+			}).exec()
+		})()
 	}
 }
 
@@ -123,3 +111,4 @@ module.exports.riftCrud = {
 // 				break;
 // 		}
 // 	}
+

@@ -16,7 +16,7 @@ const
 
 	// Database, backend
 	jsonDB = require("./jsonDB.js").db,
-	database = require("./models/db.js")
+	database = require("./models/interface.js") //used to be db.js
 
 	;
 
@@ -39,16 +39,17 @@ app.get("/", (req, res) => {
 
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
-	let riftsArray = database.riftCrud.forEach();
-	console.log(riftsArray);
+	let riftsArray = database.allRifts();
+	// let riftsArray = database.riftCrud.forEach().then(content => console.log(content));
+	console.log('array returned:' + riftsArray);
 	res.render("rifts", { rifts: riftsArray });
 });
 
 app.get("/_/:riftName", (req, res) => {
 	let thisRift;
 	res.set("Content-Type", "text/html");
-	if (jsonDB.find((e) => e.name == req.params.riftName)) {
-		thisRift = jsonDB.find((e) => e.name == req.params.riftName);
+	if (database.allRifts().find((e) => e.name == req.params.riftName)) {
+		thisRift = database.allRifts().find((e) => e.name == req.params.riftName);
 		// console.log("found an entry: ", thisRift);
 		res.render("detail", { rift: thisRift });
 	} else {
@@ -117,3 +118,4 @@ io.on('connection', (client) => {
 });
 
 server.listen(port, () => console.log(`listening on ${port}`));
+

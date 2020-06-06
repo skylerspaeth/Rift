@@ -123,4 +123,17 @@ img.banner {
   .form-dark form .btn-primary:active {
 	transform:translateY(1px);
   }  
+
+  .landingbuttons {
+	  position: relative;
+	  top: 1rem;
+	  text-align: center;;
+	  align-items: center;
+	  height: auto;
+  }
+  .landingbuttons a {
+	color: white !important;
+  }
+
+  
 /* End form styling */
