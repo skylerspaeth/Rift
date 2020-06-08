@@ -20,8 +20,6 @@ const
 	io = require('socket.io')(server),
 
 	// Database, backend
-	// jsonDB = require("./jsonDB.js").db,
-	// database = require("./models/interface.js") //used to be db.js
 	MongoClient = require('mongodb').MongoClient,
 	url = "mongodb://localhost:27017/",
 	dbName = "riftDB",
@@ -49,27 +47,25 @@ mongoose.connect(`mongodb://localhost:27017/${dbName}`, { useUnifiedTopology: tr
 app.get("/", (req, res) => {
 	res.set("Content-Type", "text/html");
 	res.render("landing", { isHome: true });
-
 });
-
 
 app.get("/_", (req, res) => {
 	res.redirect("/rifts");
 });
 
-let allRifts = () => {
-	let ret = Rift.find({}, (err, result) => {
-		if (err) {
-			res.send(err);
-			console.log(err);
-		} else {
-			// console.log(result);
-			return result;
-		}
-	}
-	).lean().exec((err, docs) => docs);
-	return ret;
-}
+// let allRifts = () => {
+// 	let ret = Rift.find({}, (err, result) => {
+// 		if (err) {
+// 			res.send(err);
+// 			console.log(err);
+// 		} else {
+// 			// console.log(result);
+// 			return result;
+// 		}
+// 	}
+// 	).lean().exec((err, docs) => docs);
+// 	return ret;
+// }
 
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
@@ -84,7 +80,7 @@ app.get("/_/:riftName", (req, res) => {
 		if (result.find((e) => e.name == req.params.riftName)) {
 			thisRift = result.find((e) => e.name == req.params.riftName);
 			// console.log("found an entry: ", thisRift);
-			res.render("detail", { rift: thisRift });
+			res.render("detail", { rift: thisRift, isRiftDetail: true });
 		} else {
 			console.log(`didnt find entry: ${req.params.riftName}`);
 			res.status(404);
@@ -101,32 +97,26 @@ app.get("/newRift", (req, res) => {
 
 // Image upload handler
 app.post('/saveImage', (req, res) => {
-	const fileName = req.query.rift + '.jpg'
-	// const fileName = req.files.myFile.name
+	// const fileName = req.query.rift + '.jpg'
+	const fileName = req.files.myFile.name
 	const path = __dirname + '/public/img/banner/' + fileName
-	try {
-		if (fs.existsSync(path)) {
-			res.send('That rift image already exists. Please try another.');
-		}
-	} catch (err) {
-		const image = req.files.myFile
+	const image = req.files.myFile
 
-		image.mv(path, (error) => {
-			if (error) {
-				console.error(error)
-				res.writeHead(500, {
-					'Content-Type': 'application/json'
-				})
-				res.end(JSON.stringify({ status: 'error', message: error }))
-				return
-			}
-
-			res.writeHead(200, {
+	image.mv(path, (error) => {
+		if (error) {
+			console.error(error)
+			res.writeHead(500, {
 				'Content-Type': 'application/json'
 			})
-			res.end(JSON.stringify({ status: 'success', path: '/img/banner/' + fileName }))
+			res.end(JSON.stringify({ status: 'error', message: error }))
+			return
+		}
+
+		res.writeHead(200, {
+			'Content-Type': 'application/json'
 		})
-	}
+		res.end(JSON.stringify({ status: 'success', path: '/img/banner/' + fileName }))
+	})
 })
 
 // ************************
