@@ -6,12 +6,17 @@ const
 	app = express(),
 	hbs = require("express-handlebars").create({ defaultLayout: "main" }),
 	port = process.env.PORT || 3000,
+	// Security
+	fs = require('fs'),
+	key = fs.readFileSync('./ssl/private.key'),
+	ca = fs.readFileSync('./ssl/ca_bundle.crt'),
+	cert = fs.readFileSync('./ssl/certificate.crt'),
 
 	// Body parser
 	bodyParser = require('body-parser'),
 
 	// Socket.io
-	server = require('http').createServer(app),
+	server = require('https').createServer({ key: key, cert: cert }, app),
 	io = require('socket.io')(server),
 
 	// Database, backend
@@ -91,25 +96,32 @@ app.get("/newRift", (req, res) => {
 
 // Image upload handler
 app.post('/saveImage', (req, res) => {
-	const fileName = req.files.myFile.name
+	const fileName = req.query.rift + '.jpg'
+	// const fileName = req.files.myFile.name
 	const path = __dirname + '/public/img/banner/' + fileName
-	const image = req.files.myFile
+	try {
+		if (fs.existsSync(path)) {
+			res.send('That rift image already exists. Please try another.');
+		}
+	} catch (err) {
+		const image = req.files.myFile
 
-	image.mv(path, (error) => {
-		if (error) {
-			console.error(error)
-			res.writeHead(500, {
+		image.mv(path, (error) => {
+			if (error) {
+				console.error(error)
+				res.writeHead(500, {
+					'Content-Type': 'application/json'
+				})
+				res.end(JSON.stringify({ status: 'error', message: error }))
+				return
+			}
+
+			res.writeHead(200, {
 				'Content-Type': 'application/json'
 			})
-			res.end(JSON.stringify({ status: 'error', message: error }))
-			return
-		}
-
-		res.writeHead(200, {
-			'Content-Type': 'application/json'
+			res.end(JSON.stringify({ status: 'success', path: '/img/banner/' + fileName }))
 		})
-		res.end(JSON.stringify({ status: 'success', path: '/img/banner/' + fileName }))
-	})
+	}
 })
 
 // ************************
