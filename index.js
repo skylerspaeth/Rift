@@ -15,12 +15,16 @@ const
 	io = require('socket.io')(server),
 
 	// Database, backend
-	jsonDB = require("./jsonDB.js").db,
-	database = require("./models/interface.js") //used to be db.js
+	// jsonDB = require("./jsonDB.js").db,
+	// database = require("./models/interface.js") //used to be db.js
+	MongoClient = require('mongodb').MongoClient,
+	url = "mongodb://localhost:27017/",
+	dbName = "riftDB",
+	mongoose = require('mongoose'),
+	{ riftSchema } = require('./models/rift.model.js'),
+	Rift = mongoose.model('Rift', riftSchema)
 
 	;
-
-//require("./models/db.js");
 
 // App configuration
 app.use(bodyParser.json())
@@ -30,6 +34,12 @@ app.set("view engine", "handlebars");
 app.use(express.static(__dirname + "/public"));
 app.use(fileupload());
 
+// Connect to database
+mongoose.connect(`mongodb://localhost:27017/${dbName}`, { useUnifiedTopology: true, useNewUrlParser: true }, (err) => {
+	if (!err) { console.log(`connection to mongoDB ${dbName} succeeded`) }
+	else { console.log(`Error connecting to mongoDB ${err}`) }
+});
+
 // Route definitions
 app.get("/", (req, res) => {
 	res.set("Content-Type", "text/html");
@@ -37,26 +47,42 @@ app.get("/", (req, res) => {
 
 });
 
+let allRifts = () => {
+	let ret = Rift.find({}, (err, result) => {
+		if (err) {
+			res.send(err);
+			console.log(err);
+		} else {
+			// console.log(result);
+			return result;
+		}
+	}
+	).lean().exec((err, docs) => docs);
+	return ret;
+}
+
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
-	let riftsArray = database.allRifts();
-	// let riftsArray = database.riftCrud.forEach().then(content => console.log(content));
-	console.log('array returned:' + riftsArray);
-	res.render("rifts", { rifts: riftsArray });
+	Rift.find({}, (err, result) => res.render("rifts", { rifts: result })).lean().exec((err, docs) => err ? console.log(err) : docs)
 });
 
 app.get("/_/:riftName", (req, res) => {
 	let thisRift;
 	res.set("Content-Type", "text/html");
-	if (database.allRifts().find((e) => e.name == req.params.riftName)) {
-		thisRift = database.allRifts().find((e) => e.name == req.params.riftName);
-		// console.log("found an entry: ", thisRift);
-		res.render("detail", { rift: thisRift });
-	} else {
-		console.log(`didnt find entry: ${req.params.riftName}`);
-		res.status(404);
-		res.render("404", { invalidRift: true });
-	}
+	Rift.find({}, (err, result) => {
+
+		if (result.find((e) => e.name == req.params.riftName)) {
+			thisRift = result.find((e) => e.name == req.params.riftName);
+			// console.log("found an entry: ", thisRift);
+			res.render("detail", { rift: thisRift });
+		} else {
+			console.log(`didnt find entry: ${req.params.riftName}`);
+			res.status(404);
+			res.render("404", { invalidRift: true });
+		}
+
+	}).lean().exec((err, docs) => err ? console.log(err) : docs)
+
 });
 
 app.get("/newRift", (req, res) => {
