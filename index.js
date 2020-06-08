@@ -99,6 +99,10 @@ app.get("/newRift", (req, res) => {
 	res.render("newRift", {});
 });
 
+app.get("/newUser", (req, res) => {
+	res.render("newUser", {});
+});
+
 // Image upload handler
 app.post('/saveImage', (req, res) => {
 	// const fileName = req.query.rift + '.jpg'
@@ -129,7 +133,6 @@ app.post('/saveImage', (req, res) => {
 io.on('connection', (client) => {
 	console.log('someone connected');
 	client.on('create', (data) => {
-		data.type = 'rift';
 		console.log('--socket.io new data--');
 		console.log(data);
 		switch (data.type) {
@@ -152,7 +155,7 @@ io.on('connection', (client) => {
 					uid: 69420,
 					displayName: "Fashionable Stubble",
 					email: "yoter@rift.works",
-					userIcon: `/img/pfp/${self.uid}`,
+					userIcon: "/img/pfp/69420.png",
 					token: "234sdfgyj9dfg09idf15kasdf9q5q345kdfa93qj34ekj239",
 					password: "insert passwordhash here",
 					roles: [{ name: "Yoter"}, { name: "Bibba" }],
