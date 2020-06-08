@@ -22,10 +22,14 @@ const
 	// Database, backend
 	MongoClient = require('mongodb').MongoClient,
 	url = "mongodb://localhost:27017/",
+	moment = require('moment'),
 	dbName = "riftDB",
 	mongoose = require('mongoose'),
+	// Schemas
 	{ riftSchema } = require('./models/rift.model.js'),
-	Rift = mongoose.model('Rift', riftSchema)
+	Rift = mongoose.model('Rift', riftSchema),
+	{ userSchema } = require('./models/user.model.js'),
+	User = mongoose.model('User', userSchema)
 
 	;
 
@@ -138,11 +142,26 @@ io.on('connection', (client) => {
 					banner: `/img/banner/${data.title}.jpg`,
 					roles: [],
 					locale: "en_US",
-					members: [69420]
+					members: [69420],
+					creationDate: moment()
 				}
 				Rift.create(newRiftObject);
 				break;
-			//case user, post, ...
+			case 'user':
+				let newUserObject = {
+					uid: 69420,
+					displayName: "Fashionable Stubble",
+					email: "yoter@rift.works",
+					userIcon: `/img/pfp/${self.uid}`,
+					token: "234sdfgyj9dfg09idf15kasdf9q5q345kdfa93qj34ekj239",
+					password: "insert passwordhash here",
+					roles: [{ name: "Yoter"}, { name: "Bibba" }],
+					locale: "en_US",
+					creationDate: moment()
+				}
+				User.create(newUserObject);
+				break;
+			//case post, ...
 			default:
 				break;
 		}

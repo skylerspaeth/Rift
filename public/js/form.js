@@ -6,3 +6,8 @@ function submitHandler(event) {
     let url = `http://skylerspaeth.com:3000/_/${formData.title}`;
     window.location.href = url;
 }
+
+function newUser() {
+    socket.emit('newUser', {});
+    alert('Done');
+}

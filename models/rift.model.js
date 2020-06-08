@@ -9,7 +9,8 @@ module.exports.riftSchema = new Schema({
   banner: String,
   roles: Array,
   locale: String,
-  members: Array
+  members: Array,
+  creationDate: String
 });
 
 // mongoose.model("Rift", riftSchema);
