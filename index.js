@@ -52,6 +52,11 @@ app.get("/", (req, res) => {
 
 });
 
+
+app.get("/_", (req, res) => {
+	res.redirect("/rifts");
+});
+
 let allRifts = () => {
 	let ret = Rift.find({}, (err, result) => {
 		if (err) {
