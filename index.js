@@ -138,17 +138,35 @@ io.on('connection', (client) => {
 		switch (data.type) {
 			case 'rift':
 				let newRiftObject = {
-					owner: 69420,
+					owner: 69420666069420,
 					title: data.title,
 					name: data.title,
 					desc: data.desc,
 					banner: `/img/banner/${data.title}.jpg`,
 					roles: [],
 					locale: "en_US",
-					members: [69420],
+					members: [69420666069420],
 					creationDate: moment()
 				}
 				Rift.create(newRiftObject);
+				break;
+			case 'post': 
+				let newPostObject = {
+					owner: 69420666069420,
+					title: "Do not say",
+					content: `So this is a totally original post. Yep. Mhm.`,
+					visibility: [
+						"all"
+					],
+					votes: [
+						{ 69420666069420: "up" }, 
+						{ 12345678901234: "down" } 
+					],
+					edited: true,
+					editedDate: "6-8-20 13:35:03",
+					creationDate: moment()
+				}
+				Post.create(newPostObject);
 				break;
 			case 'user':
 				let newUserObject = {
@@ -164,7 +182,6 @@ io.on('connection', (client) => {
 				}
 				User.create(newUserObject);
 				break;
-			//case post, ...
 			default:
 				break;
 		}

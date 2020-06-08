@@ -12,3 +12,8 @@ function newUser() {
   socket.emit('create', { type: "user" });
   alert('Done');
 }
+
+function newPost() {
+  socket.emit('create', { type: "post"});
+  alert('Post Submited');
+}

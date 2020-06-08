@@ -1,19 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var postSchema = new mongoose.Schema((
-	owner: {
-		type: Integer
-	},
-	title: {
-		type: String
-	},
-	content: {
-		type: String
-	},
-	edited: {
-		state: { type: Date }
-	},
+module.exports.postSchema = new Schema({
+  owner: Number,
+  title: String,
+  content: String,
+  visibility: Array,
+  votes: Array,
+  edited: Boolean,
+  editedDate: String,
+  creationDate: String
+});
 
-));
-
-mongoose.model('Rift', riftSchema);
+// mongoose.model("Post", postSchema);
