@@ -133,8 +133,7 @@ io.on('connection', (client) => {
 					locale: "en_US",
 					members: [69420]
 				}
-				database.riftCrud.create(newRiftObject);
-				// database.riftCrud.read(data.title);
+				Rift.create(newRiftObject);
 				break;
 			//case user, post, ...
 			default:
