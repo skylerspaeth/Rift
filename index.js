@@ -25,20 +25,27 @@ const
 	moment = require('moment'),
 	dbName = "riftDB",
 	mongoose = require('mongoose'),
-	// Schemas
-	{ riftSchema } = require('./models/rift.model.js'),
-	Rift = mongoose.model('Rift', riftSchema),
-	
-	{ userSchema } = require('./models/user.model.js'),
-	User = mongoose.model('User', userSchema),
-	
-	{ postSchema } = require('./models/post.model.js'),
-	Post = mongoose.model('Post', postSchema),
-	
-	{ messageSchema } = require('./models/message.model.js'),
-	Message = mongoose.model('Message', messageSchema)
 
+	// Schemas
+	schemas = ["Rift", "User", "Post", "Message"],
+	// { riftSchema } = require('./models/rift.model.js'),
+	// Rift = mongoose.model('Rift', riftSchema),
+
+	// { userSchema } = require('./models/user.model.js'),
+	// User = mongoose.model('User', userSchema),
+
+	// { postSchema } = require('./models/post.model.js'),
+	// Post = mongoose.model('Post', postSchema),
+
+	// { messageSchema } = require('./models/message.model.js'),
+	// Message = mongoose.model('Message', messageSchema)
 	;
+
+schemas.forEach((e) => {
+	let schemaName = e.toLowerCase() + 'Schema';
+	const global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
+	const gloabl[e] = mongoose.model(e, schemaName);
+});
 
 // App configuration
 app.use(bodyParser.json())
@@ -167,7 +174,7 @@ io.on('connection', (client) => {
 				}
 				Rift.create(newRiftObject);
 				break;
-			case 'post': 
+			case 'post':
 				let newPostObject = {
 					owner: 69420666069420,
 					title: "Do not say",
@@ -176,8 +183,8 @@ io.on('connection', (client) => {
 						"all"
 					],
 					votes: [
-						{ 69420666069420: "up" }, 
-						{ 12345678901234: "down" } 
+						{ 69420666069420: "up" },
+						{ 12345678901234: "down" }
 					],
 					edited: true,
 					editedDate: "6-8-20 13:35:03",
@@ -193,13 +200,13 @@ io.on('connection', (client) => {
 					userIcon: "/img/pfp/69420666069420.png",
 					token: "234sdfgyj9dfg09idf15kasdf9q5q345kdfa93qj34ekj239",
 					password: "insert passwordhash here",
-					roles: [{ name: "Yoter"}, { name: "Bibba" }],
+					roles: [{ name: "Yoter" }, { name: "Bibba" }],
 					locale: "en_US",
 					creationDate: moment()
 				}
 				User.create(newUserObject);
 				break;
-				case 'message': 
+			case 'message':
 				let newMessageObject = {
 					author: 69420666069420,
 					content: "Do not say do not say!",
@@ -207,8 +214,8 @@ io.on('connection', (client) => {
 						"Austin"
 					],
 					reaction: [
-						{ 69420666069420: ":lmao:" }, 
-						{ 12345678901234: ":69420:" } 
+						{ 69420666069420: ":lmao:" },
+						{ 12345678901234: ":69420:" }
 					],
 					edited: true,
 					editedDate: "6-8-20 13:35:03",
