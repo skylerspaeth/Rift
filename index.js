@@ -41,11 +41,19 @@ const
 	// Message = mongoose.model('Message', messageSchema)
 	;
 
+<<<<<<< HEAD
 schemas.forEach((e) => {
 	let schemaName = e.toLowerCase() + 'Schema';
 	const global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
 	const gloabl[e] = mongoose.model(e, schemaName);
 });
+=======
+	schemas.forEach((e) => {
+		let schemaName = e.toLowerCase() + 'Schema';
+		const global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
+		const gloabl[e] = mongoose.model(e, schemaName);
+	});
+>>>>>>> 727d71295865e8cfcde8f7af391ac6150109770d
 
 // App configuration
 app.use(bodyParser.json())
