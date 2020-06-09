@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-module.exports.messageSchema = new Schema({
+module.exports.commentSchema = new Schema({
   author: Number,
+  parentPost: Number,
   content: String,
-  visibility: Array,
   reaction: Array,
+  tags: Array,
+  nsfw: Boolean,
+  votes: Array,
   editedDate: String,
   creationDate: String
 });
 
-// mongoose.model("Message", messageSchema);
+// mongoose.model("Comment", commentSchema);

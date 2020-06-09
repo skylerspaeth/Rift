@@ -27,7 +27,7 @@ const
 	mongoose = require('mongoose'),
 
 	// Schemas
-	schemas = ["Rift", "User", "Post", "Message"]
+	schemas = ["Rift", "User", "Post", "Message", "Comment"]
 	;
 
 schemas.forEach((e) => {
@@ -172,11 +172,15 @@ io.on('connection', (client) => {
 			case 'post':
 				let newPostObject = {
 					owner: 69420666069420,
+					postID: 0,
+					nsfw: false,
 					title: "Do not say",
 					content: `So this is a totally original post. Yep. Mhm.`,
 					visibility: [
 						"all"
 					],
+					awards:["First post"],
+					tags: [],
 					votes: [
 						{ 69420666069420: "up" },
 						{ 12345678901234: "down" }
@@ -210,9 +214,6 @@ io.on('connection', (client) => {
 				let newMessageObject = {
 					author: 69420666069420,
 					content: `Do not say do not say!`,
-					location: [
-						"Austin"
-					],
 					reaction: [
 						{ 69420666069420: ":lmao:" },
 						{ 12345678901234: ":69420:" }
@@ -221,6 +222,20 @@ io.on('connection', (client) => {
 					creationDate: moment()
 				}
 				Message.create(newMessageObject);
+				break;
+			case 'comment':
+				let newCommentObject = {
+					author: 69420666069420,
+					parentPost: 0,
+					content: "Lmfao such a funny!",
+					reaction: [],
+					tags: [],
+					nsfw: false,
+					votes: [],
+					editedDate: "",
+					creationDate: moment()
+				}
+				Message.create(newCommentObject);
 				break;
 			default:
 				break;
