@@ -37,7 +37,7 @@ const
 	
 	{ messageSchema } = require('./models/message.model.js'),
 	Message = mongoose.model('Message', messageSchema)
-	
+
 	;
 
 // App configuration
@@ -63,6 +63,8 @@ app.get("/", (req, res) => {
 app.get("/_", (req, res) => {
 	res.redirect("/rifts");
 });
+
+
 
 // let allRifts = () => {
 // 	let ret = Rift.find({}, (err, result) => {
@@ -108,6 +110,14 @@ app.get("/newRift", (req, res) => {
 
 app.get("/newUser", (req, res) => {
 	res.render("newUser", {});
+});
+
+app.get("/newPost", (req, res) => {
+	res.render("newPost", {});
+});
+
+app.get("/newMessage", (req, res) => {
+	res.render("newMessage", {});
 });
 
 // Image upload handler
