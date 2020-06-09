@@ -60,6 +60,9 @@ app.get("/_", (req, res) => {
 	res.redirect("/rifts");
 });
 
+app.get("/tests", (req, res) => {
+	res.redirect("/tests");
+})
 
 
 // let allRifts = () => {
