@@ -100,21 +100,27 @@ app.get("/_/:riftName", (req, res) => {
 
 });
 
-app.get("/newRift", (req, res) => {
-	res.render("newRift", {});
+schemas.forEach((e) => {
+	app.get(`/new${e}`, (req, res) => {
+		res.render(`new${e}`, {});
+	});
 });
 
-app.get("/newUser", (req, res) => {
-	res.render("newUser", {});
-});
+// app.get("/newRift", (req, res) => {
+// 	res.render("newRift", {});
+// });
 
-app.get("/newPost", (req, res) => {
-	res.render("newPost", {});
-});
+// app.get("/newUser", (req, res) => {
+// 	res.render("newUser", {});
+// });
 
-app.get("/newMessage", (req, res) => {
-	res.render("newMessage", {});
-});
+// app.get("/newPost", (req, res) => {
+// 	res.render("newPost", {});
+// });
+
+// app.get("/newMessage", (req, res) => {
+// 	res.render("newMessage", {});
+//  });
 
 // Image upload handler
 app.post('/saveImage', (req, res) => {
@@ -175,8 +181,7 @@ io.on('connection', (client) => {
 						{ 69420666069420: "up" },
 						{ 12345678901234: "down" }
 					],
-					edited: true,
-					editedDate: "6-8-20 13:35:03",
+					editedDate: "",
 					creationDate: moment()
 				}
 				Post.create(newPostObject);
@@ -188,6 +193,12 @@ io.on('connection', (client) => {
 					email: "yoter@rift.works",
 					userIcon: "/img/pfp/69420666069420.png",
 					token: "234sdfgyj9dfg09idf15kasdf9q5q345kdfa93qj34ekj239",
+					changes: {
+						passwordChanges: [],
+						userIconChanges: [],
+						userNameChanges: [],
+						locationChanges: []
+					},
 					password: "insert passwordhash here",
 					roles: [{ name: "Yoter" }, { name: "Bibba" }],
 					locale: "en_US",
@@ -198,7 +209,7 @@ io.on('connection', (client) => {
 			case 'message':
 				let newMessageObject = {
 					author: 69420666069420,
-					content: "Do not say do not say!",
+					content: `Do not say do not say!`,
 					location: [
 						"Austin"
 					],
@@ -206,8 +217,7 @@ io.on('connection', (client) => {
 						{ 69420666069420: ":lmao:" },
 						{ 12345678901234: ":69420:" }
 					],
-					edited: true,
-					editedDate: "6-8-20 13:35:03",
+					editedDate: "",
 					creationDate: moment()
 				}
 				Message.create(newMessageObject);

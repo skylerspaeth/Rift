@@ -7,7 +7,6 @@ module.exports.postSchema = new Schema({
   content: String,
   visibility: Array,
   votes: Array,
-  edited: Boolean,
   editedDate: String,
   creationDate: String
 });

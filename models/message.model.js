@@ -7,7 +7,6 @@ module.exports.messageSchema = new Schema({
   visibility: Array,
   location: Array,
   reaction: Array,
-  edited: Boolean,
   editedDate: String,
   creationDate: String
 });
