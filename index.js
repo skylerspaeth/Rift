@@ -25,7 +25,9 @@ const
 	moment = require('moment'),
 	dbName = "riftDB",
 	mongoose = require('mongoose'),
+
 	// Schemas
+	schemas = ["Rift", "User", "Post", "Message"],
 	// { riftSchema } = require('./models/rift.model.js'),
 	// Rift = mongoose.model('Rift', riftSchema),
 
@@ -37,7 +39,6 @@ const
 
 	// { messageSchema } = require('./models/message.model.js'),
 	// Message = mongoose.model('Message', messageSchema)
-
 	;
 
 	schemas.forEach((e) => {
