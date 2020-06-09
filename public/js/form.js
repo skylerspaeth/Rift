@@ -19,6 +19,6 @@ function newPost() {
 }
 
 function newMessage() {
-  socket.emit('create'. {type: 'message'});
+  socket.emit('create', {type: 'message'});
   alert('Post Submited');
 }
