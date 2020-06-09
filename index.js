@@ -61,7 +61,7 @@ app.get("/_", (req, res) => {
 });
 
 app.get("/tests", (req, res) => {
-	res.redirect("/tests");
+	res.render("tests", {});
 })
 
 
