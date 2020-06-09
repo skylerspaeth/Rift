@@ -170,10 +170,10 @@ io.on('connection', (client) => {
 				break;
 			case 'user':
 				let newUserObject = {
-					uid: 69420,
+					uid: 69420666069420,
 					displayName: "Fashionable Stubble",
 					email: "yoter@rift.works",
-					userIcon: "/img/pfp/69420.png",
+					userIcon: "/img/pfp/69420666069420.png",
 					token: "234sdfgyj9dfg09idf15kasdf9q5q345kdfa93qj34ekj239",
 					password: "insert passwordhash here",
 					roles: [{ name: "Yoter"}, { name: "Bibba" }],
@@ -181,6 +181,23 @@ io.on('connection', (client) => {
 					creationDate: moment()
 				}
 				User.create(newUserObject);
+				break;
+				case 'message': 
+				let newMessageObject = {
+					author: 69420666069420,
+					content: "Do not say do not say!",
+					location: [
+						"Austin"
+					],
+					reaction: [
+						{ 69420666069420: ":lmao:" }, 
+						{ 12345678901234: ":69420:" } 
+					],
+					edited: true,
+					editedDate: "6-8-20 13:35:03",
+					creationDate: moment()
+				}
+				Message.create(newMessageObject);
 				break;
 			default:
 				break;
