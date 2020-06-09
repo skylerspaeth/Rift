@@ -14,15 +14,15 @@ function newUser() {
 }
 
 function newPost() {
-  socket.emit('create', { type: "post"});
+  socket.emit('create', { type: "post" });
   alert('Post Submited');
 }
 
 function newMessage() {
-  socket.emit('create', {type: 'message'});
+  socket.emit('create', { type: 'message' });
   alert('Message Submited');
 }
- function newComment() {
-   socket.emit('create', {type: 'message'});
-   alert('Comment Submitted');
- }
+function newComment() {
+  socket.emit('create', { type: 'comment' });
+  alert('Comment Submitted');
+}
