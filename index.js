@@ -37,6 +37,7 @@ const
 	
 	{ messageSchema } = require('./models/message.model.js'),
 	Message = mongoose.model('Message', messageSchema)
+	
 	;
 
 // App configuration
