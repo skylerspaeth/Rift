@@ -27,33 +27,14 @@ const
 	mongoose = require('mongoose'),
 
 	// Schemas
-	schemas = ["Rift", "User", "Post", "Message"],
-	// { riftSchema } = require('./models/rift.model.js'),
-	// Rift = mongoose.model('Rift', riftSchema),
-
-	// { userSchema } = require('./models/user.model.js'),
-	// User = mongoose.model('User', userSchema),
-
-	// { postSchema } = require('./models/post.model.js'),
-	// Post = mongoose.model('Post', postSchema),
-
-	// { messageSchema } = require('./models/message.model.js'),
-	// Message = mongoose.model('Message', messageSchema)
+	schemas = ["Rift", "User", "Post", "Message"]
 	;
 
-<<<<<<< HEAD
 schemas.forEach((e) => {
 	let schemaName = e.toLowerCase() + 'Schema';
-	const global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
-	const gloabl[e] = mongoose.model(e, schemaName);
+	global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
+	global[e] = mongoose.model(e, global[schemaName]);
 });
-=======
-	schemas.forEach((e) => {
-		let schemaName = e.toLowerCase() + 'Schema';
-		const global[schemaName] = require(`./models/${e.toLowerCase()}.model.js`)[schemaName];
-		const gloabl[e] = mongoose.model(e, schemaName);
-	});
->>>>>>> 727d71295865e8cfcde8f7af391ac6150109770d
 
 // App configuration
 app.use(bodyParser.json())
