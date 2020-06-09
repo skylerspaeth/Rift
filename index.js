@@ -179,7 +179,7 @@ io.on('connection', (client) => {
 					visibility: [
 						"all"
 					],
-					awards:["First post"],
+					awards: ["First post"],
 					tags: [],
 					votes: [
 						{ 69420666069420: "up" },
@@ -235,7 +235,7 @@ io.on('connection', (client) => {
 					editedDate: "",
 					creationDate: moment()
 				}
-				Message.create(newCommentObject);
+				Comment.create(newCommentObject);
 				break;
 			default:
 				break;
