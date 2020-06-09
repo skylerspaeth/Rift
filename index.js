@@ -28,9 +28,15 @@ const
 	// Schemas
 	{ riftSchema } = require('./models/rift.model.js'),
 	Rift = mongoose.model('Rift', riftSchema),
+	
 	{ userSchema } = require('./models/user.model.js'),
-	User = mongoose.model('User', userSchema)
-
+	User = mongoose.model('User', userSchema),
+	
+	{ postSchema } = require('./models/post.model.js'),
+	Post = mongoose.model('Post', postSchema),
+	
+	{ messageSchema } = require('./models/message.model.js'),
+	Message = mongoose.model('Message', messageSchema)
 	;
 
 // App configuration
