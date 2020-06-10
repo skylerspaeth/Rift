@@ -1,7 +1,8 @@
 {
   "name": "rift",
   "version": "1.0.0",
-  "description": "",
+  "description": "RiftApp Server",
+  "repository": "https://github.com/skylerspaeth/Rift",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
