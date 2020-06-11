@@ -1,11 +1,14 @@
-// Database schema initialization
 const
+	// Environment
+	env = process.env.ENV || 'dev',
+
 	// Webserver, templating
 	fileupload = require('express-fileupload'),
 	express = require("express"),
 	app = express(),
 	hbs = require("express-handlebars").create({ defaultLayout: "main" }),
 	port = process.env.PORT || 3000,
+
 	// Security
 	fs = require('fs'),
 	key = fs.readFileSync('./ssl/private.key'),
@@ -14,6 +17,14 @@ const
 
 	// Body parser
 	bodyParser = require('body-parser'),
+
+	// Login & Signup
+	nodemailer = require('nodemailer'),
+	{ mailCreds } = require('./donotsay.json'),
+	email = nodemailer.createTransport({
+		service: 'Gmail',
+		auth: { user: mailCreds.user, pass: mailCreds.password }
+	}),
 
 	// Socket.io
 	server = require('https').createServer({ key: key, cert: cert }, app),
@@ -60,24 +71,11 @@ app.get("/_", (req, res) => {
 	res.redirect("/rifts");
 });
 
-app.get("/tests", (req, res) => {
-	res.render("tests", {});
-})
-
-
-// let allRifts = () => {
-// 	let ret = Rift.find({}, (err, result) => {
-// 		if (err) {
-// 			res.send(err);
-// 			console.log(err);
-// 		} else {
-// 			// console.log(result);
-// 			return result;
-// 		}
-// 	}
-// 	).lean().exec((err, docs) => docs);
-// 	return ret;
-// }
+if (env === 'dev') {
+	app.get("/tests", (req, res) => {
+		res.render("tests", {});
+	});
+}
 
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
@@ -85,21 +83,18 @@ app.get("/rifts", (req, res) => {
 });
 
 app.get("/_/:riftName", (req, res) => {
-	let thisRift;
 	res.set("Content-Type", "text/html");
-	Rift.find({}, (err, result) => {
-
-		if (result.find((e) => e.name == req.params.riftName)) {
-			thisRift = result.find((e) => e.name == req.params.riftName);
-			// console.log("found an entry: ", thisRift);
-			res.render("detail", { rift: thisRift, isRiftDetail: true });
+	Rift.findOne({ name: req.params.riftName }, (err, result) => {
+		if (result) {
+			console.log("found an entry: ", result);
+			res.render("detail", { rift: result, isRiftDetail: true });
 		} else {
 			console.log(`didnt find entry: ${req.params.riftName}`);
 			res.status(404);
 			res.render("404", { invalidRift: true });
 		}
-
-	}).lean().exec((err, docs) => err ? console.log(err) : docs)
+	}
+	).lean().exec((err, docs) => err ? console.log(err) : docs)
 
 });
 
@@ -108,22 +103,6 @@ schemas.forEach((e) => {
 		res.render(`new${e}`, {});
 	});
 });
-
-// app.get("/newRift", (req, res) => {
-// 	res.render("newRift", {});
-// });
-
-// app.get("/newUser", (req, res) => {
-// 	res.render("newUser", {});
-// });
-
-// app.get("/newPost", (req, res) => {
-// 	res.render("newPost", {});
-// });
-
-// app.get("/newMessage", (req, res) => {
-// 	res.render("newMessage", {});
-//  });
 
 // Image upload handler
 app.post('/saveImage', (req, res) => {
@@ -243,6 +222,15 @@ io.on('connection', (client) => {
 			default:
 				break;
 		}
+	});
+	client.on('emailTest', (data) => {
+		console.log('********* sending email to ' + data.recipient);
+		email.sendMail({
+			from: '"Rift App" <rift.donotreply@gmail.com>',
+			to: data.recipient,
+			subject: 'Verify your new Rift account',
+			text: 'mcyotestve\'estaunayort'
+		}, (err) => { console.log(err ? `error sending email: ${err}` : 'email sent!') })
 	});
 });
 

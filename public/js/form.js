@@ -26,3 +26,9 @@ function newComment() {
   socket.emit('create', { type: 'comment' });
   alert('Comment Submitted');
 }
+
+function sendEmail() {
+  let email = prompt('Email to test:');
+  socket.emit('emailTest', { recipient: email });
+  alert('Email sending...');
+}
