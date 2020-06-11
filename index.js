@@ -75,6 +75,19 @@ if (env === 'dev') {
 	app.get("/tests", (req, res) => {
 		res.render("tests", {});
 	});
+	app.get("/emailTest", (req, res) => {
+		res.render('email/verification', { name: "Test User" }, (err, html) => {
+			if (err) console.log('error in email template');
+			console.log('********* sending email to test user');
+			email.sendMail({
+				from: '"Rift App" <rift.donotreply@gmail.com>',
+				to: 'crucio715@gmail.com',
+				subject: 'Verify your new Rift account',
+				html: html,
+				generateTextFromHtml: true
+			}, (err) => { console.log(err ? `error sending email: ${err}` : 'email sent!') })
+		});
+	})
 }
 
 app.get("/rifts", (req, res) => {
