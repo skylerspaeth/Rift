@@ -31,7 +31,6 @@ const
 	io = require('socket.io')(server),
 
 	// Database, backend
-	MongoClient = require('mongodb').MongoClient,
 	url = "mongodb://localhost:27017/",
 	moment = require('moment'),
 	dbName = "riftDB",
