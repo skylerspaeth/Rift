@@ -1,7 +1,4 @@
 const
-	// Environment
-	env = process.env.ENV || 'dev',
-
 	// Webserver, templating
 	fileupload = require('express-fileupload'),
 	express = require("express"),
@@ -9,6 +6,9 @@ const
 	hbs = require("express-handlebars").create({ defaultLayout: "main" }),
 	port = process.env.PORT || 3000,
 
+	// Environment
+	env = app.get('env') || 'development',
+	
 	// Security
 	fs = require('fs'),
 	key = fs.readFileSync('./ssl/private.key'),
@@ -61,20 +61,10 @@ mongoose.connect(`mongodb://localhost:27017/${dbName}`, { useUnifiedTopology: tr
 	else { console.log(`Error connecting to mongoDB ${err}`) }
 });
 
-// Route definitions
-app.get("/", (req, res) => {
-	res.set("Content-Type", "text/html");
-	res.render("landing", { isHome: true });
-});
-
-app.get("/_", (req, res) => {
-	res.redirect("/rifts");
-});
-
-if (env === 'dev') {
-	app.get("/tests", (req, res) => {
-		res.render("tests", {});
-	});
+// Development-only route definitions
+if (env === 'development') {
+	app.get("/tests", (req, res) => { res.render("tests", {}) });
+	app.get("/start", (req, res) => { res.redirect("start.html") });
 	app.get("/emailTest", (req, res) => {
 		res.render('email/verification', { name: "Test User" }, (err, html) => {
 			if (err) console.log('error in email template');
@@ -90,9 +80,14 @@ if (env === 'dev') {
 	})
 }
 
+// Primary route definitions
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
 	Rift.find({}, (err, result) => res.render("rifts", { rifts: result })).lean().exec((err, docs) => err ? console.log(err) : docs)
+});
+
+app.get("/_", (req, res) => {
+	res.redirect("/rifts");
 });
 
 app.get("/_/:riftName", (req, res) => {
@@ -140,6 +135,18 @@ app.post('/saveImage', (req, res) => {
 		res.end(JSON.stringify({ status: 'success', path: '/img/banner/' + fileName }))
 	})
 })
+
+// Error middleware
+app.use((req, res) => { res.status(404); res.render("404") });
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+	res.status(500);
+	res.send('500 - Server Error');
+});
+
+// *******************************************************
+// End of routes! Keep error handlers after primary routes
+// *******************************************************
 
 // ************************
 // ***Socket definitions***
@@ -247,4 +254,4 @@ io.on('connection', (client) => {
 	});
 });
 
-server.listen(port, () => console.log(`listening on ${port}`));
+server.listen(port, () => console.log(`${env} server listening on ${port}`));
