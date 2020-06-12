@@ -81,6 +81,11 @@ if (env === 'development') {
 }
 
 // Primary route definitions
+app.get("/", (req, res) => {
+	res.set("Content-Type", "text/html");
+	res.render("landing", { isHome: true });
+});
+
 app.get("/rifts", (req, res) => {
 	res.set("Content-Type", "text/html");
 	Rift.find({}, (err, result) => res.render("rifts", { rifts: result })).lean().exec((err, docs) => err ? console.log(err) : docs)
