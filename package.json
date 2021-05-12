@@ -21,7 +21,7 @@
     "moment": "^2.26.0",
     "mongodb": "^3.5.7",
     "mongoose": "^5.9.16",
-    "nodemailer": "^6.4.8",
+    "nodemailer": "^6.4.16",
     "nodemon": "^2.0.4",
     "popper.js": "^1.16.1",
     "socket.io": "^2.3.0"
